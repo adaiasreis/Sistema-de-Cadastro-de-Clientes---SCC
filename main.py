@@ -65,14 +65,14 @@ def inserirCliente(): #solicita e amazena as informações  dos clientes até qu
     os.system('clear')
     print("\t\t *** CADASTRO DE CLIENTE ***")
     print("\nCadastro Nº",cad)
-    cpf = leiaInt("CPF: ") #função que verifica se foi digitado realmente um inteiro
+    cpf = leiaIntCpf("CPF: ") #função que verifica se foi digitado realmente um inteiro
     for i in listaClientes: #varre os itens da lista
       if cpf == i.cpf: #compara os itens da lista com o digitado
-        print("\n[!]Cliente já cadastrado!")
+        print("\n\t[!]Cliente já cadastrado!")
         time.sleep(3)
         return     
     nome = input("Nome: ")
-    telefone = int(input("Telefone: "))
+    telefone = leiaIntTel("Telefone: ")
     email = input("Email: ")
   
     cli = Cliente(cpf, nome, telefone, email)
@@ -129,7 +129,7 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
         #return cabecalho()
 
     if esc == 2:
-      cPesq = int(input("Digite o CPF do cliente: "))
+      cPesq = leiaIntCpf("Digite o CPF do cliente: ")
       os.system('clear')
       print("\n\t\t*** RESULTADO PESQUISA ***")
 
@@ -154,11 +154,12 @@ def excluirCliente():#excluir algum cliente da lista, caso necessário
     print("\n\t[!] Nenhum cliente Cadastrado")
     time.sleep(3)
   else:
-    cpfCli = int(input("\nDigite o CPF do cliente: "))
+    cpfCli = leiaIntCpf("\nDigite o CPF do cliente: ")
     for item in listaClientes:
       if cpfCli == item.cpf:
         listaClientes.remove(item) #remove item encontrado
         print("\n[*_*] Cliente removido com sucesso!")
+        time.sleep(3)
 
 def manualUsuario(): #as principais funcionalidades do programa 
   os.system('clear')
@@ -251,13 +252,16 @@ def sair(): # encerrará o programa
   print("\t *** Sistema Desligando... ***")
   time.sleep(5)
 
-def leiaInt(msn): #função para verificar se foi digitado um numero inteiro
+def leiaIntCpf(msn): #função que verifica se foi digitado apenas numero inteiro e formata para o formato cpf
+  import re
   numInt = False
   num = 0
   while True:
-    x = str(input(msn))
+    x = input(msn)
     if x.isnumeric():
       num = int(x)
+      num = "{:0>11}".format(int(num))
+      return re.sub("(\d{3})(\d{3})(\d{3})(\d{2})","\\1.\\2.\\3-\\4", num)
       numInt = True
     else:
       print("\n[!] Por favor, digite só os números.")
@@ -265,5 +269,23 @@ def leiaInt(msn): #função para verificar se foi digitado um numero inteiro
     if numInt:
       break
   return num
-  
+
+def leiaIntTel(msn): #função que verifica se foi digitado apenas numero inteiro e formata para o formato de numero de telefone
+  import re
+  numInt = False
+  num = 0
+  while True:
+    x = input(msn)
+    if x.isnumeric():
+      num = int(x)
+      num = "{:0>11}".format(int(num))
+      return re.sub("(\d{2})(\d{5})(\d{4})","\\1-\\2-\\3", num)
+      numInt = True
+    else:
+      print("\n[!] Por favor, digite só os números.")
+      time.sleep(2)
+    if numInt:
+      break
+  return num
+    
 credUser()
