@@ -120,6 +120,7 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
           i.printCliente()
           print("")
           print("*/*/*"*10)
+          atualizarCliente(i)
 
           input("\n[*_*] Precione qualquer tecla para voltar ")# se precionada, realizará outro cadastro
           return
@@ -132,12 +133,12 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
       cPesq = leiaIntCpf("Digite o CPF do cliente: ")
       os.system('clear')
       print("\n\t\t*** RESULTADO PESQUISA ***")
-
       for i in listaClientes:
         if cPesq == i.cpf:      
           print("*****"*10)
           i.printCliente()
           print("*/*/*"*10)
+          atualizarCliente(i)
 
           input("\n[*_*] Precione qualquer tecla para voltar ")# se precionada, realizará outro cadastro
           return
@@ -146,6 +147,37 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
       time.sleep(5)
     else:
       print("[!]Opção Inválida!")
+
+def atualizarCliente(i):
+  print("\nDeseja fazer alguma alteração nas informações do cliente?")
+  opc = int(input("[1]-Sim\t[2]-Não\nResposta: "))
+  if opc == 1:
+    print("\nQual alteração deseja fazer?")
+    alt = int(input("\t[1]-Nome\n\t[2]-Telefone\n\t[3]-Email\nResposta: "))
+    if alt == 1:
+      nNome = input("\nNovo nome: ")
+      i.nome = nNome
+      print("\n[*_*] Nome atualizado com sucesso!")
+      time.sleep(3)
+    if alt == 2:
+      nTel = leiaIntTel("\nNovo telefone: ")
+      i.telefone = nTel
+      print("\n[*_*] Telefone atualizado com sucesso!")
+      time.sleep(3)
+    if alt == 3:
+      nEmail = input("\nDigite novo email: ")
+      i.email = nEmail
+      print("\n[*_*] Email atualizado com sucesso!")
+      time.sleep(3)
+    else:
+      print("\n\t[!] Opção inválida.")
+      time.sleep(3)
+      return
+  if opc == 2:
+    print("\n[?] Mantenha sempre os dados dos clientes atualizados. Orbrigado.")
+    time.sleep(3)
+  else:
+    print("\n\t[!] Opção Inválida")
 
 def excluirCliente():#excluir algum cliente da lista, caso necessário
   os.system('clear')
@@ -279,7 +311,7 @@ def leiaIntTel(msn): #função que verifica se foi digitado apenas numero inteir
     if x.isnumeric():
       num = int(x)
       num = "{:0>11}".format(int(num))
-      return re.sub("(\d{2})(\d{5})(\d{4})","\\1-\\2-\\3", num)
+      return re.sub("(\d{2})(\d{5})(\d{4})","\\1.\\2.\\3", num)
       numInt = True
     else:
       print("\n[!] Por favor, digite só os números.")
