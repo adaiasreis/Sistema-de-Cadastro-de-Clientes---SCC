@@ -21,7 +21,7 @@ listaClientes = [] #Vai armazenar as informações dos clientes
 cad = 1 #Contador de cadastros, incrementa a cada cadastro realizado
 def cabecalho(): #Informações e boas vindas
   os.system('clear')
-  print("\n\t\t-=-=-=-=-= SCC v1.0 -=-=-=-=-= ")
+  print("\n\t\t\t-=-=-=-=-= SCC v1.0 -=-=-=-=-= ")
   print("\n\t** MARCCOS DISTRIBUIDORA DE ALIMENTOS E CIA LTDA **")
   print("\t\t\t\tAv. 2 de Julho, Centro")
   print("\t\t- Onde tudo que você precisa custa barato -")
@@ -34,7 +34,7 @@ def cabecalho(): #Informações e boas vindas
 def menu(): #Menu de acesso à opções do sistema.
   while(True):
     cabecalho()
-    print("\n\t[1] - Inserir Cliente\n\t[2] - Listar Clientes\n\t[3] - Pesquisar Cliente\n\t[4] - Excluir Cliente\n\t[5] - Sobre o programa\n\t[6] - Manual do Usuário\n\t[7] - FAQ\n\t[8] - Sair")
+    print("\n\t[1] - Inserir Cliente\n\t[2] - Listar Clientes\n\t[3] - Pesquisar Cliente\n\t[4] - Excluir Cliente\n\t[5] - Sobre o programa\n\t[6] - Manual do Usuário\n\t[7] - FAQ\n\t[8] - Sair\n\t[9] - Autopreencher (somente teste)")
   
     opcao = int(input("\nEscolha uma opção: ")) # usuário escolhe a opção
     if opcao == 1:
@@ -51,10 +51,14 @@ def menu(): #Menu de acesso à opções do sistema.
       manualUsuario()
     if opcao == 7:
       faq()
-    elif opcao == 8:
+    if opcao == 8:
       sair()
       os.system('clear') #limpa a tela
       break
+    if opcao == 9:
+      autoPreencher()
+    else:
+      print("\n[!] Por favor, digite uma opção válida!")
   else:
     print("[!] Opção inválida!") # caso digite uma opção que não esteja disponível
   os.system('clear') 
@@ -92,7 +96,8 @@ def listarClientes(): # verifica e lista os clientes cadastrados
     time.sleep(3)
   else:
     print("")
-    print("-=*"*15)
+    cCad = len(listaClientes)
+    print("\nClientes cadastrados: ",cCad)  
     for i in listaClientes: #imprime a lista
       print("")
       i.printCliente()
@@ -110,7 +115,7 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
   else:
     esc = int(input("\nFiltro da pesquisa\n\n\t[1]-Nome\n\t[2]-CPF\n\nOpção:  "))
     if esc == 1:
-      nPesq = input("\n\nDigite o nome do cliente: ")
+      nPesq = input("\nDigite o nome do cliente: ")
       os.system('clear')
       print("\n\t\t*** RESULTADO PESQUISA ***")
       for i in listaClientes:
@@ -122,25 +127,27 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
           print("*/*/*"*10)
           atualizarCliente(i)
 
-          input("\n[*_*] Precione qualquer tecla para voltar ")# se precionada, realizará outro cadastro
+          input("\n[*_*] Precione qualquer tecla para voltar ")
           return
         
       print("\n[!]Cliente com este nome não encontrado! ")
       time.sleep(3)
-        #return cabecalho()
 
     if esc == 2:
-      cPesq = leiaIntCpf("Digite o CPF do cliente: ")
+      cPesq = leiaIntCpf("\nDigite o CPF do cliente: ")
       os.system('clear')
-      print("\n\t\t*** RESULTADO PESQUISA ***")
+      print("\n\t\t*** RESULTADO PESQUISA ***\n")
+      print("")
       for i in listaClientes:
         if cPesq == i.cpf:      
           print("*****"*10)
+          print("")
           i.printCliente()
+          print("")
           print("*/*/*"*10)
           atualizarCliente(i)
 
-          input("\n[*_*] Precione qualquer tecla para voltar ")# se precionada, realizará outro cadastro
+          input("\n[*_*] Precione qualquer tecla para voltar ")
           return
 
       print("\n[!] Cliente com este CPF não encontrado!")
@@ -148,33 +155,32 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
     else:
       print("[!]Opção Inválida!")
 
-def atualizarCliente(i):
-  print("\nDeseja fazer alguma alteração nas informações do cliente?")
-  opc = int(input("[1]-Sim\t[2]-Não\nResposta: "))
+def atualizarCliente(i): #atualiza os dados do cliente quando necessario
+  print("\nDeseja fazer alguma alteração nas informações deste cliente?")
+  opc = int(input("\n\t[1]-Sim\n\t[2]-Não\n\nResposta: "))
   if opc == 1:
     print("\nQual alteração deseja fazer?")
-    alt = int(input("\t[1]-Nome\n\t[2]-Telefone\n\t[3]-Email\nResposta: "))
+    alt = int(input("\n\t[1]-Nome\n\t[2]-Telefone\n\t[3]-Email\n\nResposta: "))
     if alt == 1:
       nNome = input("\nNovo nome: ")
       i.nome = nNome
-      print("\n[*_*] Nome atualizado com sucesso!")
+      print("\n\t[*_*] Nome atualizado com sucesso!")
       time.sleep(3)
-    if alt == 2:
+    elif alt == 2:
       nTel = leiaIntTel("\nNovo telefone: ")
       i.telefone = nTel
-      print("\n[*_*] Telefone atualizado com sucesso!")
+      print("\n\t[*_*] Telefone atualizado com sucesso!")
       time.sleep(3)
-    if alt == 3:
+    elif alt == 3:
       nEmail = input("\nDigite novo email: ")
       i.email = nEmail
-      print("\n[*_*] Email atualizado com sucesso!")
+      print("\n\t[*_*] Email atualizado com sucesso!")
       time.sleep(3)
     else:
       print("\n\t[!] Opção inválida.")
       time.sleep(3)
-      return
-  if opc == 2:
-    print("\n[?] Mantenha sempre os dados dos clientes atualizados. Orbrigado.")
+  elif opc == 2:
+    print("\n[?] Mantenha sempre os dados dos clientes atualizados. Obrigado.")
     time.sleep(3)
   else:
     print("\n\t[!] Opção Inválida")
@@ -193,12 +199,27 @@ def excluirCliente():#excluir algum cliente da lista, caso necessário
         print("\n[*_*] Cliente removido com sucesso!")
         time.sleep(3)
 
+def autoPreencher(): #autopreenchimento para testes do sistema
+  os.system('clear')
+  print("\t\t *** AUTOPREENCHIMENTO ***")
+  cli = Cliente('123.456.789-00','Ana','12.34567.8901','@ana.com')
+  listaClientes.append(cli)
+  cli = Cliente('123.456.789-09', 'Bia', '12.34567.8902', '@bia.com')
+  listaClientes.append(cli)
+  cli = Cliente('123.456.789-08','Caio','12.34567.8903','@caio.com')
+  listaClientes.append(cli)
+  cli = Cliente('123.456.789-07','Beto','12.34567.8904','@beto.com')
+  listaClientes.append(cli)
+
+  print("\n\t[*_*] ...Autopreenchimento realizado com sucesso!...")
+  time.sleep(3)
+
 def manualUsuario(): #as principais funcionalidades do programa 
   os.system('clear')
-  print("\n\t *** MANUAL DO USUÁRIO ***")
-  print("\n! Aqui você encontra o manual do nosso programa")
+  print("\n\t\t*** MANUAL DO USUÁRIO ***")
+  print("\nAqui você encontra o manual do nosso programa")
   print("\n- Para iniciar o programa, digite o login e a senha.")
-  print("- OBS: Se o usuário ou a senha for digitado incorretamente por 5 vezes o usuário será bloqueado. Pare restabelecer o acesso entre em contato com o administrador.")
+  print("\n\t+OBS: Se o usuário ou a senha for digitado incorretamente por 5 vezes o usuário será bloqueado. Pare restabelecer o acesso entre em contato com o administrador.")
   print("\n- Ao abrir o sistem aparece um menu. Digite a opção desejada.")
   print("\n-Insira todas as informações pedidas.")
   print("\n- Após o cadastro, na tela aparecerá uma mensagem para, caso desejar, cadastrar outro cliente. Se for o seu desejo faça o que ela pede. ")
@@ -209,7 +230,7 @@ def manualUsuario(): #as principais funcionalidades do programa
   print("\n- Na opção Sobre o Programa, poderá encontrar informações sobre o nosso programa. ")
   print("\n- Se precisar do manual, selecione a opção 6.")
   print("\n- Dúvidas? Selecione a opção 7, e lá você encontra as perguntas que são frequentes. Quem sabe alguma poderá te ajudar! ")
-  print("\n- Para fechar o programa, selecione a opção Sair no menu. ")
+  print("\n- Para fechar o programa, selecione a opção Sair [8] no menu. ")
   
   input("\n\n[*_*] Digite qualquer tecla para retornar")
 
@@ -217,14 +238,18 @@ def faq(): #repostas às perguntas mais conus sobre o programa
   os.system('clear')
   print("\t****** PERGUNTAS FREQUENTES ******")  
   print("\n1- Onde eu acho o login e a senha?")
-  print("- Eles serão enviados pelo email ou telefone que forem informados.")
-  print("\n2-  Por que a senha não aparece na tela de login?")
-  print("-  Ela não aparece por motivo de segurança.")
-  print("\n3- Quero fazer outro cadastro, como faço? ")
-  print("-  É só selecionar no menu a opção Inserir Clientes. ")
-  print("\n4- Como saber os clientes que estão na lista?")
+  print("- Eles serão enviados pelo email ou telefone que foi informado.")
+  print("\n2- Perdi o meu acesso, o que faço?")
+  print("\n- Entre em contato como adminstrador")
+  print("\n3- Posso redefinir minha senha?")
+  print("\n- Não. Por questão de segurança a senha só pode ser redefinida pelo adminstrador. Consulte-o")
+  print("\n4- Por que a senha não aparece na tela de login?")
+  print("- Ela não aparece por motivo de segurança.")
+  print("\n5- Quero fazer outro cadastro, como faço? ")
+  print("- É só selecionar no menu a opção Inserir Clientes. ")
+  print("\n6- Como saber os clientes que estão na lista?")
   print("- Basta seleciona a opção Listar Clientes e os que estiverem na lista vão aparecer. ")
-  print("\n5- Como excluir algum cliente da lista? ")
+  print("\n7- Como excluir algum cliente da lista? ")
   print("- Selecione a opção Excluir Cliente.")
   
   input("\n\n[*_*] Digite qualquer tecla para retornar")
@@ -236,9 +261,9 @@ def sobrePrograma(): # informações sobre o programa
   print("Licença: Teste - Atividade do Curso de Programador de Sistemas - SENAC/Bahia")
   print("Idealizadores: Willa Almeida e Adaias dos Reis")
   print("Docência: Rafeael Santos")
-  print("\nObrigado por usar nosso sistema")
+  print("\n\t[*_*] Obrigado por usar nosso sistema")
   print("\n\t\t ***** DONATE ***** ")
-  input("\n\nPrecione qualquer tecla para voltar ")
+  input("\n\n[*] Precione qualquer tecla para voltar ")
   os.system('clear') 
 
 def credUser(): #credenciais de acessoa ao sistema
