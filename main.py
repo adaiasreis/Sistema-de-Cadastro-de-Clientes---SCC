@@ -78,13 +78,13 @@ def inserirCliente(): #solicita e amazena as informações  dos clientes até qu
     nome = input("Nome: ")
     telefone = leiaIntTel("Telefone: ")
     email = input("Email: ")
-  
+
     cli = Cliente(cpf, nome, telefone, email)
     listaClientes.append(cli) #os dados coletados são armazenados numa lista
     cad += 1 #incremeto dos cadastros
 
     print("\nCadastrar outro cliente?")
-    opc = input("* Aperte qualquer tecla para continue ou [N] para voltar: ")#encerra o loop de cadastro
+    opc = input("* Tecle [ENTER] para continue ou [N] para voltar: ")#encerra o loop de cadastro
     if opc == 'N' or opc == 'n':
       break
 
@@ -104,7 +104,7 @@ def listarClientes(): # verifica e lista os clientes cadastrados
       print("")
       print("-=*"*15)
 
-    input("\n\n[*_*] Precione qualquer tecla para voltar ")
+    input("\n\n[*_*] Tecle [ENTER] para voltar ")
 
 def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
   os.system('clear')
@@ -126,8 +126,6 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
           print("")
           print("*/*/*"*10)
           atualizarCliente(i)
-
-          input("\n[*_*] Precione qualquer tecla para voltar ")
           return
         
       print("\n[!]Cliente com este nome não encontrado! ")
@@ -137,7 +135,6 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
       cPesq = leiaIntCpf("\nDigite o CPF do cliente: ")
       os.system('clear')
       print("\n\t\t*** RESULTADO PESQUISA ***\n")
-      print("")
       for i in listaClientes:
         if cPesq == i.cpf:      
           print("*****"*10)
@@ -146,10 +143,8 @@ def pesquisarCliente(): #Busca um cliente na lista e retorno seus dados
           print("")
           print("*/*/*"*10)
           atualizarCliente(i)
-
-          input("\n[*_*] Precione qualquer tecla para voltar ")
           return
-
+        
       print("\n[!] Cliente com este CPF não encontrado!")
       time.sleep(5)
     else:
@@ -181,7 +176,7 @@ def atualizarCliente(i): #atualiza os dados do cliente quando necessario
       time.sleep(3)
   elif opc == 2:
     print("\n[?] Mantenha sempre os dados dos clientes atualizados. Obrigado.")
-    time.sleep(3)
+    time.sleep(5)
   else:
     print("\n\t[!] Opção Inválida")
 
@@ -200,16 +195,21 @@ def excluirCliente():#excluir algum cliente da lista, caso necessário
         time.sleep(3)
 
 def autoPreencher(): #autopreenchimento para testes do sistema
+  global cad
   os.system('clear')
   print("\t\t *** AUTOPREENCHIMENTO ***")
   cli = Cliente('123.456.789-00','Ana','12.34567.8901','@ana.com')
   listaClientes.append(cli)
+  cad = 1
   cli = Cliente('123.456.789-09', 'Bia', '12.34567.8902', '@bia.com')
   listaClientes.append(cli)
+  cad = 2
   cli = Cliente('123.456.789-08','Caio','12.34567.8903','@caio.com')
   listaClientes.append(cli)
+  cad = 3
   cli = Cliente('123.456.789-07','Beto','12.34567.8904','@beto.com')
   listaClientes.append(cli)
+  cad = 4
 
   print("\n\t[*_*] ...Autopreenchimento realizado com sucesso!...")
   time.sleep(3)
@@ -232,7 +232,7 @@ def manualUsuario(): #as principais funcionalidades do programa
   print("\n- Dúvidas? Selecione a opção 7, e lá você encontra as perguntas que são frequentes. Quem sabe alguma poderá te ajudar! ")
   print("\n- Para fechar o programa, selecione a opção Sair [8] no menu. ")
   
-  input("\n\n[*_*] Digite qualquer tecla para retornar")
+  input("\n\n[*_*] Tecle [ENTER] para retornar")
 
 def faq(): #repostas às perguntas mais conus sobre o programa
   os.system('clear')
@@ -252,7 +252,7 @@ def faq(): #repostas às perguntas mais conus sobre o programa
   print("\n7- Como excluir algum cliente da lista? ")
   print("- Selecione a opção Excluir Cliente.")
   
-  input("\n\n[*_*] Digite qualquer tecla para retornar")
+  input("\n\n[*_*] Tecle [ENTER] para retornar")
   
 def sobrePrograma(): # informações sobre o programa
   os.system('clear')
@@ -263,7 +263,7 @@ def sobrePrograma(): # informações sobre o programa
   print("Docência: Rafeael Santos")
   print("\n\t[*_*] Obrigado por usar nosso sistema")
   print("\n\t\t ***** DONATE ***** ")
-  input("\n\n[*] Precione qualquer tecla para voltar ")
+  input("\n\n[*] Tecle [ENTER] para voltar ")
   os.system('clear') 
 
 def credUser(): #credenciais de acessoa ao sistema
